@@ -6,14 +6,14 @@ Membuat web aplikasi pengonversi video ke MP3 menggunakan Next.js dan Nest.js. A
 
 ```
 converter-video-apps/
-├── converter-video-be/  # Backend Nest.js
+├── api/  # Backend Nest.js
 │   ├── src/
 │   │   ├── compress/
 │   │   └── ...
 │   ├── temp/           # File video sementara (Dihapus saat restart)
 │   ├── temp_raw/       # File video mentah (Dihapus saat restart)
 │   └── ...
-├── converter-video-fe/  # Frontend Next.js
+├── web/  # Frontend Next.js
 │   ├── app/
 │   │   ├── page.tsx
 │   │   └── ...
@@ -27,7 +27,7 @@ converter-video-apps/
 
 1. Masuk ke direktori backend:
 ```bash
-cd converter-video-be
+cd api
 ```
 
 2. Install dependencies:
@@ -58,7 +58,7 @@ pnpm start:dev
 
 1. Masuk ke direktori frontend:
 ```bash
-cd converter-video-fe
+cd web
 ```
 
 2. Install dependencies:
