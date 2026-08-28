@@ -65,12 +65,15 @@ export class CompressService {
     const tempFilePath = path.join(tempOutputDir, tempFilename);
 
     return new Promise((resolve, reject) => {
-      // 1. Proses Kompresi dengan FFmpeg
+      const outputOptions = isWebm
+        ? [`-crf ${crf}`, '-b:v 0', '-deadline realtime', '-cpu-used 4', '-threads 2']
+        : [`-crf ${crf}`, '-preset superfast', '-threads 2'];
+
       ffmpeg(file.path)
         .videoCodec(isWebm ? 'libvpx-vp9' : 'libx264')
         .audioCodec(isWebm ? 'libopus' : 'aac')
         .format(format)
-        .outputOptions(isWebm ? [`-crf ${crf}`, '-b:v 0'] : [`-crf ${crf}`])
+        .outputOptions(outputOptions)
         .on('start', () => {
           this.logger.log(`Mulai kompresi ${file.filename} ke format ${format}.`);
         })
