@@ -11,8 +11,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # 3. Copy file package
 COPY package.json pnpm-lock.yaml* ./
 
-# 4. Install dependencies dengan mengabaikan pembatasan build script
-RUN pnpm install --unsafe-perm
+# 4. Konfigurasi pnpm agar tidak memblokir build script dependency
+RUN pnpm config set build-suppress-pnpm-version-warning true
+RUN pnpm install --no-frozen-lockfile --ignore-scripts=false
 
 # 5. Copy seluruh kode backend
 COPY . .
