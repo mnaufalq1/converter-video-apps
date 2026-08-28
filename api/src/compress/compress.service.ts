@@ -89,25 +89,16 @@ export class CompressService {
             this.cleanupFiles([file.path, tempFilePath]);
             const message = this.getUploadErrorMessage(uploadError);
             this.logger.error(`Unggah Cloudinary gagal: ${message}`);
-            const clientMessage =
-              process.env.NODE_ENV === 'production'
-                ? 'Gagal mengunggah video ke Cloudinary.'
-                : `Gagal mengunggah video ke Cloudinary: ${message}`;
             reject(
-              new InternalServerErrorException(clientMessage),
+              new InternalServerErrorException(`Cloudinary Error: ${message}`),
             );
           }
         })
         .on('error', (err) => {
           this.cleanupFiles([file.path, tempFilePath]);
           this.logger.error(`Kompresi gagal: ${err.message}`);
-          const isFfmpegMissing = /ffmpeg|ENOENT/i.test(err.message);
           reject(
-            new InternalServerErrorException(
-              isFfmpegMissing
-                ? 'FFmpeg tidak ditemukan. Instal FFmpeg dan tambahkan ke PATH server.'
-                : 'Gagal memproses kompresi video.',
-            ),
+            new InternalServerErrorException(`FFmpeg/Compress Error: ${err.message}`),
           );
         })
         .save(tempFilePath);
