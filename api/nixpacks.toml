@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['ffmpeg']
+
+[phases.build]
+cmds = ['pnpm install --ignore-scripts', 'pnpm build']
+
+[start]
+cmd = 'node dist/main'
