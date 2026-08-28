@@ -3,6 +3,7 @@ import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import ffmpeg from 'fluent-ffmpeg';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as ffmpegPath from 'ffmpeg-static';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,10 +18,19 @@ export class CompressService {
       api_key: process.env.CLOUDINARY_API_KEY,
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
+    // Tentukan path FFmpeg (apakah dari ENV, ffmpeg-static, atau sistem)
+    const staticPath = (ffmpegPath as any)?.default || ffmpegPath;
+    const envPath = process.env.FFMPEG_PATH;
 
-    if (process.env.FFMPEG_PATH) {
-      ffmpeg.setFfmpegPath(process.env.FFMPEG_PATH);
-      this.logger.log(`Menggunakan FFmpeg dari: ${process.env.FFMPEG_PATH}`);
+    if (envPath && fs.existsSync(envPath)) {
+      ffmpeg.setFfmpegPath(envPath);
+      this.logger.log(`Menggunakan FFmpeg dari ENV: ${envPath}`);
+    } else if (typeof staticPath === 'string' && fs.existsSync(staticPath)) {
+      ffmpeg.setFfmpegPath(staticPath);
+      this.logger.log(`Menggunakan FFmpeg dari ffmpeg-static: ${staticPath}`);
+    } else {
+      // Jika tidak ada di ENV maupun ffmpeg-static, biarkan fluent-ffmpeg menggunakan FFmpeg dari sistem (PATH)
+      this.logger.log('Binary ffmpeg-static/ENV tidak ditemukan, menggunakan FFmpeg bawaan sistem (PATH).');
     }
   }
 
