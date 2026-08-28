@@ -15,6 +15,7 @@ COPY package.json pnpm-lock.yaml* ./
 ENV PNPM_ALLOW_BUILD=unrs-resolver
 
 # 5. Install dependencies
+RUN pnpm approve-builds unrs-resolver
 RUN pnpm install --no-frozen-lockfile
 
 # 6. Copy seluruh kode backend
