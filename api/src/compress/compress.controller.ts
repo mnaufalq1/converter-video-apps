@@ -9,6 +9,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
+import * as fs from 'fs';
 import { v2 as cloudinary } from 'cloudinary';
 import { CompressService } from './compress.service';
 
@@ -25,7 +26,13 @@ export class CompressController {
     FileInterceptor('video', {
       limits: { fileSize: MAX_VIDEO_SIZE },
       storage: diskStorage({
-        destination: './temp_raw',
+        destination: (req, file, cb) => {
+          const uploadPath = './temp_raw';
+          if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        },
         filename: (req, file, cb) => {
           const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
           const ext = path.extname(file.originalname);

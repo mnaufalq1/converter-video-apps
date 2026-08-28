@@ -2,7 +2,7 @@
 nixPkgs = ['ffmpeg']
 
 [phases.build]
-cmds = ['pnpm install --ignore-scripts', 'pnpm build']
+cmds = ['pnpm install --frozen-lockfile', 'pnpm build']
 
 [start]
 cmd = 'node dist/main'
