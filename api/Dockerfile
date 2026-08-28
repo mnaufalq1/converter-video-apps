@@ -14,7 +14,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 COPY package.json pnpm-lock.yaml ./
 
 # 6. Install dependencies
-RUN pnpm install --frozen-lockfile --all
+RUN pnpm install --frozen-lockfile
 
 # 7. Salin seluruh source code backend
 COPY . .
