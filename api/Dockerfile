@@ -1,5 +1,5 @@
 # 1. Base image dengan Node.js & Alpine Linux (ringan)
-FROM node:20-alpine
+FROM node:22-alpine
 
 # 2. Install FFmpeg di dalam container server
 RUN apk add --no-cache ffmpeg
