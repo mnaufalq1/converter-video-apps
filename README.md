@@ -1,6 +1,6 @@
 # Web Aplikasi Pengonversi Video ke MP3
 
-Membuat web aplikasi pengonversi video ke MP3 menggunakan Next.js dan Nest.js. Aplikasi ini akan memiliki fitur upload video, konversi ke MP3, dan download hasil konversi.
+Membuat web aplikasi pengonversi video ke MP3 menggunakan Next.js dan Nest.js. Aplikasi ini akan memiliki fitur upload video, konversi ke MP4, atau AVI, atau WEBM, atau MOV dan download hasil konversi.
 
 ## Struktur Proyek
 
@@ -43,7 +43,7 @@ cp .env.example .env
 4. Isi environment variables di .env:
 ```env
 PORT=3000
-FFMPEG_PATH=C:\Users\HP\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0-full_build\bin\ffmpeg.exe
+FFMPEG_PATH=your_path_to_ffmpeg
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
