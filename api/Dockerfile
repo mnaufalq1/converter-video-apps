@@ -16,6 +16,7 @@ COPY package.json pnpm-lock.yaml ./
 # 6. Install dependencies
 RUN pnpm install --frozen-lockfile
 RUN pnpm approve-builds unrs-resolver
+RUN pnpm config set any-component-build-by-default true
 
 # 7. Salin seluruh source code backend
 COPY . .
